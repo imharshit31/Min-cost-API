@@ -8,7 +8,9 @@ app.use(bodyParser.json());
 
 function calc(x) {
     return Math.floor((x + 4) / 5) * 8 + 2;
-}
+
+    // Calculates the cost of shifting x kgs to 1 unit
+}   
 
 function calculateMinimumCost(order) {
 
@@ -53,7 +55,7 @@ function calculateMinimumCost(order) {
 app.post('/calculateMinimumCost', (req, res) => {
     const order = req.body;
     const minimumCost = calculateMinimumCost(order);
-    res.json({ minimumCost });
+    res.send({ minimumCost });
 });
 
 app.listen(PORT, () => {
