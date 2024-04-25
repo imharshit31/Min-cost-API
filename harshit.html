@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Fields</title>
+</head>
+
+<body>
+    <div class="valueContainer">
+        <div class="inputGroup">
+            <h1>A</h1>
+            <button class="sub">-</button>
+            <input type="number" class="inputField" value="0" />
+            <button class="add">+</button>
+        </div>
+        <div class="inputGroup">
+            <h1>B</h1>
+            <button class="sub">-</button>
+            <input type="number" class="inputField" value="0" />
+            <button class="add">+</button>
+        </div>
+        <!-- Repeat the input group block for Input 3 to Input 9 -->
+        <div class="inputGroup">
+            <h1>C</h1>
+            <button class="sub">-</button>
+            <input type="number" class="inputField" value="0" />
+            <button class="add">+</button>
+        </div>
+        <!-- Repeat the input group block for Input 10 to Input 15 -->
+        <div class="inputGroup">
+            <h1>D</h1>
+            <button class="sub">-</button>
+            <input type="number" class="inputField" value="0" />
+            <button class="add">+</button>
+        </div>
+        <div class="inputGroup">
+            <h1>E</h1>
+            <button class="sub">-</button>
+            <input type="number" class="inputField" value="0" />
+            <button class="add">+</button>
+        </div>
+        <div class="inputGroup">
+            <h1>F</h1>
+            <button class="sub">-</button>
+            <input type="number" class="inputField" value="0" />
+            <button class="add">+</button>
+        </div>
+        <div class="inputGroup">
+            <h1>G</h1>
+            <button class="sub">-</button>
+            <input type="number" class="inputField" value="0" />
+            <button class="add">+</button>
+        </div>
+        <div class="inputGroup">
+            <h1>H</h1>
+            <button class="sub">-</button>
+            <input type="number" class="inputField" value="0" />
+            <button class="add">+</button>
+        </div>
+        <div class="inputGroup">
+            <h1>I</h1>
+            <button class="sub">-</button>
+            <input type="number" class="inputField" value="0" />
+            <button class="add">+</button>
+        </div>
+
+    </div>
+    <button id="submitBtn">Submit</button>
+
+    <h2 id="output"></h2>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputFields = document.querySelectorAll('.inputField');
+            const addButtons = document.querySelectorAll('.add');
+            const subButtons = document.querySelectorAll('.sub');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // Increment function
+            function incrementValue(input) {
+                input.value = parseInt(input.value) + 1;
+            }
+
+            // Decrement function
+            function decrementValue(input) {
+                const currentValue = parseInt(input.value);
+                if (currentValue > 0) {
+                    input.value = currentValue - 1;
+                }
+            }
+
+            // Add event listeners to all add buttons
+            addButtons.forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    incrementValue(inputFields[index]);
+                });
+            });
+
+            // Add event listeners to all subtract buttons
+            subButtons.forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    decrementValue(inputFields[index]);
+                });
+            });
+
+            // Add event listener to submit button
+            //endpoint - https://min-cost-api.onrender.com/calculateMinimumCost
+            submitBtn.addEventListener('click', async() => {
+                const allValues = Array.from(inputFields).map(input => parseInt(input.value));
+                const result = {};
+                for (let i = 0; i < allValues.length; i++) {
+                    result[String.fromCharCode(65 + i)] = allValues[i];
+                }
+                const url = 'http://localhost:3000/';
+
+                // Options for the fetch request
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+
+                    },
+                    body: JSON.stringify(result),
+                    mode: 'no-cors' // Set mode to 'no-cors'
+
+                };
+
+                // Send the POST request
+                let res = await fetch(url, options)
+                console.log(res)
+                let body = JSON.parse(res.json())
+                console.log(body)
+                    // .then(data => {
+                    //   console.log(data)
+                    //     document.getElementById('output').innerText=data
+                    // })
+                    // .catch(error => {
+                    //     console.error('There was a problem with the fetch operation:', error);
+                    // });
+            });
+        });
+    </script>
+</body>
+
+</html>
